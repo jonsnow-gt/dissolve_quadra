@@ -1,0 +1,30 @@
+Sub dissolve_quadra()
+linha = 2
+quadra = 1
+
+While quadra < 2937
+    Sheets("classes_2004").Cells(quadra, 1) = Sheets("quadras_2004").Cells(linha, 1) 'codigo da quadra
+    Sheets("classes_2004").Cells(quadra, 2) = Sheets("quadras_2004").Cells(linha, 4) 'numero da quadra
+    Sheets("classes_2004").Cells(quadra, 3) = Sheets("quadras_2004").Cells(linha, 5) 'tipo de uso
+    Sheets("classes_2004").Cells(quadra, 4) = Sheets("quadras_2004").Cells(linha, 2) 'classe da quadra
+    Sheets("classes_2004").Cells(quadra, 5) = Sheets("quadras_2004").Cells(linha, 3) 'area classe
+    
+    If Sheets("classes_2004").Cells(quadra, 3) = "Uso Simples" Then 'uso simples
+        Sheets("classes_2004").Cells(quadra, 4) = Sheets("quadras_2004").Cells(linha, 2) 'classe da quadra
+        linha = linha + 1
+    
+    ElseIf Sheets("classes_2004").Cells(quadra, 3) = "Uso Misto" Then 'uso misto
+        While Sheets("classes_2004").Cells(quadra, 2) = Sheets("quadras_2004").Cells(linha, 4) 'mesma quadra
+            If Abs(Sheets("classes_2004").Cells(quadra, 5)) < Abs(Sheets("quadras_2004").Cells(linha, 3)) Then 'se area menor, muda
+                Sheets("classes_2004").Cells(quadra, 4) = Sheets("quadras_2004").Cells(linha, 2) 'classe da quadra
+                Sheets("classes_2004").Cells(quadra, 5) = Sheets("quadras_2004").Cells(linha, 3) 'area classe
+            End If
+        linha = linha + 1
+        Wend
+        
+    End If
+    
+    quadra = quadra + 1
+    
+Wend
+End Sub
